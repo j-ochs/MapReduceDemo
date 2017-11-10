@@ -22,11 +22,12 @@ public class WordCount {
 		
 		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 			//read in the data
-			//
+			//split the data into words
 			StringTokenizer itr = new StringTokenizer(value.toString());
 			Text word = new Text();
 			IntWritable one = new IntWritable(1);
 			while (itr.hasMoreTokens()) {
+				//output (word, 1) for each word
 				word.set(itr.nextToken());
 				context.write(word, one);
 			}
@@ -42,6 +43,7 @@ public class WordCount {
 				count++;
 				iterator.next();
 			}
+			context.write(term, new IntWritable(count));
 		}
 		
 	}
